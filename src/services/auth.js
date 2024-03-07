@@ -1,3 +1,5 @@
 import { API } from "../API";
 
-export const loginService = ({loginData}) => API.post({loginData})
+export const loginService = async(user, password) => await API.post("/login", {
+    user, password
+})
