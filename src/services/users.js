@@ -10,4 +10,8 @@ export const getUsers = async () => await API.get('/users', config)
 
 export const deleteUser = async (id) => await API.delete(`/users/${id}`, config)
 
-export const addUser = async ({user}) => await API.put('/users', user, config)
+export const addUser = async (name, email, roles) => await API.put('/users', {
+    name,
+    email,
+    roles
+}, config)

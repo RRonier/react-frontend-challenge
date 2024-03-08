@@ -12,12 +12,19 @@ const resources = {
             "usersData": "Users Data",
             "tableSubtitle": "Detailed list of users in the database",
             "filterLabel": "Filter by name or role",
-            "user": "user",
+            "user": "user name",
             "email": "email",
             "roles": "roles",
+            "admin_role": "admin",
+            "user_role": "user",
             "actions": "actions",
             "should_delete_user_message": "Do you want to delete the user?",
-            "user_deleted_message": "User has been deleted successfully"
+            "user_deleted_message": "User has been deleted successfully",
+            "new_user_added": "User added successfully",
+            "add_new_user": "Add new user",
+            "enter_users_data": "Please enter user's data",
+            "cancel": "Cancel",
+            "add_user": "Add User"
         }
     },
     es: {
@@ -30,12 +37,19 @@ const resources = {
             "usersData": "Datos de los Usuarios",
             "tableSubtitle": "Lista detallada de los usuarios en la base de datos",
             "filterLabel": "Filtrar por nombre o rol",
-            "user": "usuario",
+            "user": "nombre de usuario",
             "email": "correo",
             "roles": "roles",
+            "admin_role": "admin",
+            "user_role": "usuario",
             "actions": "acciones",
             "should_delete_user_message": "¿Desea eliminar el usuario?",
-            "user_deleted_message": "Usuario eliminado satisfactoriamente"
+            "user_deleted_message": "Usuario eliminado satisfactoriamente",
+            "new_user_added": "Usuario creado satisfactoriamente",
+            "add_new_user": "Agregar nuevo usuario",
+            "enter_users_data": "Inserte datos del usuario por favor",
+            "cancel": "Cancelar",
+            "add_user": "Agregar Usuario"
         }
     }
 };
@@ -44,7 +58,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "en",
+        lng: "es",
         interpolation: {
             escapeValue: false
         }

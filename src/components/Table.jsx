@@ -14,6 +14,7 @@ import { visuallyHidden } from '@mui/utils';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import {useTranslation} from "react-i18next";
 
 function EnhancedTableHead(props) {
@@ -137,11 +138,8 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                             }}>
                                                 <DeleteOutlinedIcon />
                                             </IconButton>
-                                            <IconButton>
+                                            <IconButton onClick={(event) => handleClick(event, row.name)}>
                                                 <VisibilityOutlinedIcon />
-                                            </IconButton>
-                                            <IconButton>
-                                                <MoreVertOutlinedIcon />
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>
