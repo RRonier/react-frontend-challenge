@@ -57,7 +57,7 @@ function EnhancedTableHead(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export const EnhancedTable = ({ users }) => {
+export const EnhancedTable = ({ users, deleteUser }) => {
     const [selected, setSelected] = React.useState([]);
 
     const handleClick = (event, name) => {
@@ -76,7 +76,6 @@ export const EnhancedTable = ({ users }) => {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
     };
 
@@ -132,7 +131,10 @@ export const EnhancedTable = ({ users }) => {
                                         <TableCell align="left">{row.roles.join(", ")}
                                         </TableCell>
                                         <TableCell align="left" sx={{ display: "flex", alignItems: "center" }}>
-                                            <IconButton>
+                                            <IconButton onClick={(event) => {
+                                                deleteUser(row.id)
+                                                event.stopPropagation();
+                                            }}>
                                                 <DeleteOutlinedIcon />
                                             </IconButton>
                                             <IconButton>

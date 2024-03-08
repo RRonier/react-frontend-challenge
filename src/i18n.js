@@ -15,7 +15,9 @@ const resources = {
             "user": "user",
             "email": "email",
             "roles": "roles",
-            "actions": "actions"
+            "actions": "actions",
+            "should_delete_user_message": "Do you want to delete the user?",
+            "user_deleted_message": "User has been deleted successfully"
         }
     },
     es: {
@@ -31,7 +33,9 @@ const resources = {
             "user": "usuario",
             "email": "correo",
             "roles": "roles",
-            "actions": "acciones"
+            "actions": "acciones",
+            "should_delete_user_message": "¿Desea eliminar el usuario?",
+            "user_deleted_message": "Usuario eliminado satisfactoriamente"
         }
     }
 };

@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import {Box, Grid, TextField, Typography} from "@mui/material";
-import {getUsers} from "../services/users.js";
+import {getUsers, deleteUser} from "../services/users.js";
 import {EnhancedTable} from "../components/Table.jsx";
 import {useTranslation} from "react-i18next";
+import {enqueueSnackbar} from "notistack";
 
 const UsersDashboard = () => {
     const [users, setUsers] = useState([])
@@ -18,6 +19,15 @@ const UsersDashboard = () => {
     const filteredValue = search ?
         users.filter(user => user.name.includes(search.toLowerCase()) || user.roles.includes(search.toLowerCase()))
         : users
+
+    const onDeleteUser = async (id) => {
+        if(confirm(t('should_delete_user_message'))) {
+            await deleteUser(id)
+            const updatedUsers = users.filter((user) => user.id !== id);
+            setUsers(updatedUsers)
+            enqueueSnackbar(t('user_deleted_message'))
+        }
+    }
 
     return (
         <Grid container sx={{
@@ -45,7 +55,7 @@ const UsersDashboard = () => {
                         sx={{ marginRight: '15px'}}
                     />
                 </Box>
-                <EnhancedTable users={filteredValue} />
+                <EnhancedTable deleteUser={onDeleteUser} users={filteredValue} />
             </Box>
         </Grid>
     )
