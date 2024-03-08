@@ -14,10 +14,12 @@ import { visuallyHidden } from '@mui/utils';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import {useTranslation} from "react-i18next";
 
 function EnhancedTableHead(props) {
     // eslint-disable-next-line react/prop-types
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
+    const {t, i18n} = useTranslation()
 
     return (
         <TableHead>
@@ -33,7 +35,7 @@ function EnhancedTableHead(props) {
                         }}
                     />
                 </TableCell>
-                {[{ label: "USER" }, { label: "EMAIL" }, { label: "ROLES" }, { label: "ACTIONS" }].map((headCell, i) => (
+                {[{ label: t('user').toUpperCase() }, { label: t('email').toUpperCase() }, { label: t('roles').toUpperCase() }, { label: t('actions').toUpperCase() }].map((headCell, i) => (
                     <TableCell
                         key={i}
                         align={'left'}

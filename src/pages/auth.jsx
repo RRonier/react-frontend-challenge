@@ -9,9 +9,12 @@ import {
 } from '@mui/material';
 import { loginService } from '../services/auth';
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const LoginPage = () => {
     const navigate = useNavigate()
+    const {t, i18n} = useTranslation()
+
     const formik = useFormik({
         initialValues: {
             user: '',
@@ -22,11 +25,11 @@ const LoginPage = () => {
             user: Yup
                 .string()
                 .max(255)
-                .required('The user is required'),
+                .required(t('userRequiredError')),
             password: Yup
                 .string()
                 .max(255)
-                .required('Password is required')
+                .required(t('passwordRequiredError'))
         }),
         onSubmit: async (values, helpers) => {
             try {
@@ -63,7 +66,7 @@ const LoginPage = () => {
                 >
                     <Typography variant='h4' sx={{
                         color: 'black',
-                    }}>Login</Typography>
+                    }}>{t('login')}</Typography>
                     <div>
                         <Stack
                             spacing={1}
@@ -82,7 +85,7 @@ const LoginPage = () => {
                                     error={!!(formik.touched.user && formik.errors.user)}
                                     fullWidth
                                     helperText={formik.touched.user && formik.errors.user}
-                                    label="User"
+                                    label={t('userLabel')}
                                     name="user"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
@@ -93,7 +96,7 @@ const LoginPage = () => {
                                     error={!!(formik.touched.password && formik.errors.password)}
                                     fullWidth
                                     helperText={formik.touched.password && formik.errors.password}
-                                    label="Password"
+                                    label={t('passwordLabel')}
                                     name="password"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
@@ -117,7 +120,7 @@ const LoginPage = () => {
                                 type="submit"
                                 variant="contained"
                             >
-                                Login
+                                {t('login')}
                             </Button>
                         </form>
                     </div>
