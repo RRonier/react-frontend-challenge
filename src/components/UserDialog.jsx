@@ -7,18 +7,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CustomSelect from "./CustomSelect.jsx";
-import {addUser} from "../services/users.js";
 import {enqueueSnackbar} from "notistack";
 import {useTranslation} from "react-i18next";
+import {createUser} from "../store/slices/users.slice.js";
+import {useDispatch} from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-export default function UserDialog({ open, handleClose, setUsers }) {
+export default function UserDialog({ open, handleClose }) {
     const [formValues, setFormValues] = useState({
         name: "",
         email: "",
     })
     const [role, setRole] = useState([])
     const {t} = useTranslation()
+    const dispatch = useDispatch()
 
     const handleChangeValues = (event) => {
         let { name, value } = event.target
@@ -46,8 +48,7 @@ export default function UserDialog({ open, handleClose, setUsers }) {
                     component: 'form',
                     onSubmit: async (event) => {
                         event.preventDefault();
-                        const {data} = await addUser(formValues.name, formValues.email, role)
-                        setUsers((prevUsers) => [...prevUsers, data])
+                        dispatch(createUser({name: formValues.name, email: formValues.email, roles: role}))
                         enqueueSnackbar(t('new_user_added'))
                         handleClose();
                     },

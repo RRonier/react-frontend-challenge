@@ -1,22 +1,22 @@
 import {useEffect, useState} from "react";
 import {Box, Button, Grid, TextField, Typography} from "@mui/material";
-import {getUsers, deleteUser} from "../services/users.js";
 import {EnhancedTable} from "../components/Table.jsx";
 import {useTranslation} from "react-i18next";
 import {enqueueSnackbar} from "notistack";
 import UserDialog from "../components/UserDialog.jsx";
+import {fetchUsers, removeUser} from "../store/slices/users.slice.js"
+import { useDispatch, useSelector } from 'react-redux';
 
 const UsersDashboard = () => {
-    const [users, setUsers] = useState([])
     const [search, setSearch] = useState('');
     const {t} = useTranslation()
     const [showUserDialog, setShowUserDialog] = useState(false)
+    const dispatch = useDispatch()
+    const users = useSelector((state) => state.users.entities);
 
     useEffect(() => {
-        getUsers().then(({data}) => {
-            setUsers(data)
-        })
-    }, []);
+        dispatch(fetchUsers());
+    },[users]);
 
     const filteredValue = search ?
         users.filter(user => user.name.includes(search.toLowerCase()) || user.roles.includes(search.toLowerCase()))
@@ -24,9 +24,7 @@ const UsersDashboard = () => {
 
     const onDeleteUser = async (id) => {
         if(confirm(t('should_delete_user_message'))) {
-            await deleteUser(id)
-            const updatedUsers = users.filter((user) => user.id !== id);
-            setUsers(updatedUsers)
+            dispatch(removeUser(id))
             enqueueSnackbar(t('user_deleted_message'))
         }
     }
@@ -74,7 +72,7 @@ const UsersDashboard = () => {
             {
                 showUserDialog &&
                     <div style={{zIndex: 999}}>
-                        <UserDialog open={showUserDialog} handleClose={handleClose} setUsers={setUsers} />
+                        <UserDialog open={showUserDialog} handleClose={handleClose} />
                     </div>
             }
         </Grid>
