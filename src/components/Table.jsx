@@ -13,14 +13,13 @@ import IconButton from '@mui/material/IconButton';
 import { visuallyHidden } from '@mui/utils';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import EditIcon from '@mui/icons-material/Edit';
 import {useTranslation} from "react-i18next";
 
 function EnhancedTableHead(props) {
     // eslint-disable-next-line react/prop-types
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
-    const {t, i18n} = useTranslation()
+    const {t} = useTranslation()
 
     return (
         <TableHead>
@@ -60,6 +59,7 @@ function EnhancedTableHead(props) {
 // eslint-disable-next-line react/prop-types
 export const EnhancedTable = ({ users, deleteUser }) => {
     const [selected, setSelected] = React.useState([]);
+    const {t} = useTranslation()
 
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
@@ -140,6 +140,12 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                             </IconButton>
                                             <IconButton onClick={(event) => handleClick(event, row.name)}>
                                                 <VisibilityOutlinedIcon />
+                                            </IconButton>
+                                            <IconButton onClick={(e) => {
+                                                e.stopPropagation()
+                                                alert(t('feature_not_implemented'))
+                                            }}>
+                                                <EditIcon/>
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>

@@ -24,7 +24,8 @@ const resources = {
             "add_new_user": "Add new user",
             "enter_users_data": "Please enter user's data",
             "cancel": "Cancel",
-            "add_user": "Add User"
+            "add_user": "Add User",
+            "feature_not_implemented": "Feature not implemented"
         }
     },
     es: {
@@ -49,7 +50,8 @@ const resources = {
             "add_new_user": "Agregar nuevo usuario",
             "enter_users_data": "Inserte datos del usuario por favor",
             "cancel": "Cancelar",
-            "add_user": "Agregar Usuario"
+            "add_user": "Agregar Usuario",
+            "feature_not_implemented": "Feature no implementada"
         }
     }
 };
@@ -58,7 +60,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "es",
+        lng: "en",
         interpolation: {
             escapeValue: false
         }
