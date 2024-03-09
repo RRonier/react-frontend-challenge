@@ -7,13 +7,16 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { loginService } from '../services/auth';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import { useDispatch } from 'react-redux';
+import {login} from '../store/slices/auth.slice.js'
 
 const LoginPage = () => {
     const navigate = useNavigate()
-    const {t, i18n} = useTranslation()
+    const {t} = useTranslation()
+    const dispatch = useDispatch();
+    // const {user: {user, token}} = useSelector(state => state.auth)
 
     const formik = useFormik({
         initialValues: {
@@ -33,8 +36,7 @@ const LoginPage = () => {
         }),
         onSubmit: async (values, helpers) => {
             try {
-                let {user, password} = values
-                await loginService(user, password);
+                dispatch(login(values));
                 navigate("/dashboard", { replace: true, relative: "route" })
             } catch (err) {
                 helpers.setStatus({ success: false });
