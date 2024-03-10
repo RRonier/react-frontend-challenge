@@ -150,7 +150,7 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                         </TableCell>
                                     </TableRow>
                                 );
-                            }) : ''}
+                            }) : <></>}
                         </TableBody>
                     </Table>
                 </TableContainer>

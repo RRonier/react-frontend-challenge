@@ -12,7 +12,8 @@ export const fetchUsers = createAsyncThunk(
 export const removeUser = createAsyncThunk(
     'users/deleteUser',
     async (id) => {
-        await deleteUser(id)
+        const {data} = await deleteUser(id)
+        return data
     })
 
 export const createUser = createAsyncThunk(
@@ -59,7 +60,7 @@ const usersSlice = createSlice({
             })
             .addCase(createUser.fulfilled, (state, action) => {
                 state.loading = 'idle';
-                state.entities = [state.entities, ...action.payload.data]
+                state.entities = [...state.entities, action.payload.data]
             })
             .addCase(createUser.rejected, (state, action) => {
                 state.loading = 'idle';

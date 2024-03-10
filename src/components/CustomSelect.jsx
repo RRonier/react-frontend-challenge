@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {useTranslation} from "react-i18next";
+import {Typography} from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,7 +28,7 @@ function getStyles(name, personName, theme) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function MultipleSelect({handleChange, userRole}) {
+export default function MultipleSelect({name, handleChange, value, onError, onBlur, helperText}) {
     const theme = useTheme();
     const {t} = useTranslation()
 
@@ -40,26 +41,29 @@ export default function MultipleSelect({handleChange, userRole}) {
             <FormControl sx={{ pt: 1, mt: 1, width: 300 }}>
                 <InputLabel>{t('roles')}</InputLabel>
                 <Select
-                    labelId="multiple-select"
-                    id="multiple-select"
-                    name="multiple-select"
+                    labelId={name}
+                    id={name}
+                    name={name}
                     multiple
-                    value={userRole}
+                    value={value}
                     onChange={handleChange}
                     input={<OutlinedInput label="Name" />}
                     MenuProps={MenuProps}
                     size="small"
+                    error={onError}
+                    onBlur={onBlur}
                 >
                     {roles.map((role) => (
                         <MenuItem
                             key={role}
                             value={role}
-                            style={getStyles(role, userRole, theme)}
+                            style={getStyles(role, value, theme)}
                         >
                             {role}
                         </MenuItem>
                     ))}
                 </Select>
+                {onError && <Typography fontSize="12px" sx={{ color: '#d32f2f' }}>{helperText}</Typography>}
             </FormControl>
         </div>
     );

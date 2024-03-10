@@ -9,6 +9,10 @@ const resources = {
             "passwordLabel": "Password",
             "userRequiredError": "The user is required",
             "passwordRequiredError": "The password is required",
+            "emailRequiredError": "The email is required",
+            "valid_email_error": "Enter a valid email",
+            "error_on_submit": "An error has occured. Please verify the data entered",
+            "required_role_error": "Please select at last one role",
             "usersData": "Users Data",
             "tableSubtitle": "Detailed list of users in the database",
             "filterLabel": "Filter by name or role",
@@ -35,6 +39,10 @@ const resources = {
             "passwordLabel": "Contraseña",
             "userRequiredError": "El usuario es obligatorio",
             "passwordRequiredError": "La contraseña es obligatoria",
+            "emailRequiredError": "El correo es obligatorio",
+            "required_role_error": "Por favor, seleccione al menos un rol",
+            "valid_email_error": "Inserte un email valido",
+            "error_on_submit": "Un error ha occurido. Por favor, verifique los datos insertados",
             "usersData": "Datos de los Usuarios",
             "tableSubtitle": "Lista detallada de los usuarios en la base de datos",
             "filterLabel": "Filtrar por nombre o rol",
@@ -51,7 +59,7 @@ const resources = {
             "enter_users_data": "Inserte datos del usuario por favor",
             "cancel": "Cancelar",
             "add_user": "Agregar Usuario",
-            "feature_not_implemented": "Feature no implementada"
+            "feature_not_implemented": "Feature no implementada",
         }
     }
 };
@@ -60,7 +68,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "en",
+        lng: "es",
         interpolation: {
             escapeValue: false
         }

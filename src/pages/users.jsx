@@ -16,7 +16,7 @@ const UsersDashboard = () => {
 
     useEffect(() => {
         dispatch(fetchUsers());
-    },[users]);
+    },[]);
 
     const filteredValue = search ?
         users.filter(user => user.name.includes(search.toLowerCase()) || user.roles.includes(search.toLowerCase()))
@@ -72,7 +72,7 @@ const UsersDashboard = () => {
             {
                 showUserDialog &&
                     <div style={{zIndex: 999}}>
-                        <UserDialog open={showUserDialog} handleClose={handleClose} />
+                        <UserDialog open={true} handleClose={handleClose} />
                     </div>
             }
         </Grid>
