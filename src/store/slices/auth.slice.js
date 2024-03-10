@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {loginService} from "../../services/auth.js"; // Assuming you have an API module
 
 export const login = createAsyncThunk(
@@ -7,6 +7,7 @@ export const login = createAsyncThunk(
         const {user, password} = userData
         const {data} = await loginService(user, password);
         localStorage.setItem('token', data.token)
+        localStorage.setItem('user', data.user)
 
         return data;
     }

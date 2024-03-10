@@ -9,14 +9,14 @@ import {
 } from '@mui/material';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../store/slices/auth.slice.js'
 
 const LoginPage = () => {
     const navigate = useNavigate()
     const {t} = useTranslation()
     const dispatch = useDispatch();
-    // const {user: {user, token}} = useSelector(state => state.auth)
+    const {user} = useSelector(state => state.auth)
 
     const formik = useFormik({
         initialValues: {
@@ -37,17 +37,20 @@ const LoginPage = () => {
         onSubmit: async (values, helpers) => {
             try {
                 dispatch(login(values));
-                navigate("/dashboard", { replace: true, relative: "route" })
+                if(user && user.user) {
+                    navigate("/dashboard", { replace: true, relative: "route" })
+                } else {
+                    helpers.setErrors({ submit: t("error_on_submit") });
+                }
             } catch (err) {
                 helpers.setStatus({ success: false });
-                helpers.setErrors({ submit: err.message });
+                helpers.setErrors({ submit: t("error_on_submit")  });
                 helpers.setSubmitting(false);
             }
         }
     });
 
     return (
-        <>
             <Box
                 sx={{
                     backgroundColor: 'background.paper',
@@ -55,7 +58,8 @@ const LoginPage = () => {
                     alignItems: 'center',
                     display: 'flex',
                     justifyContent: 'center',
-                    width: 400
+                    width: 400,
+                    margin: '0 auto'
                 }}
             >
                 <Box
@@ -128,7 +132,6 @@ const LoginPage = () => {
                     </div>
                 </Box>
             </Box>
-        </>
     );
 };
 
