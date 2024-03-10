@@ -2,7 +2,7 @@ import {API} from "../API.js";
 
 const config = {
     headers: {
-        'x-access-token': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdCIsImlhdCI6MTcwOTgxMDg4NSwiZXhwIjoxNzA5ODE0NDg1fQ.XcoNIAVY1ne-0ObgCqKFFzdbVEpIo2n6XnAa85Uyavo'
+        'x-access-token': `Bearer ${localStorage.getItem('token')}`
     }
 }
 
