@@ -7,8 +7,7 @@ export const API = axios.create({
 
 // Add a request interceptor to set content type headers
 axios.interceptors.request.use(function (config) {
-  const headers = "application/json"
-  config.headers['Content-Type'] =  headers;
+    config.headers['Content-Type'] = "application/json";
 
   return config;
 });
