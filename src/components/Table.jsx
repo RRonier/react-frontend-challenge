@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,12 +14,13 @@ import { visuallyHidden } from '@mui/utils';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import {useSelector} from 'react-redux'
 
 function EnhancedTableHead(props) {
     // eslint-disable-next-line react/prop-types
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <TableHead>
@@ -58,8 +59,9 @@ function EnhancedTableHead(props) {
 
 // eslint-disable-next-line react/prop-types
 export const EnhancedTable = ({ users, deleteUser }) => {
-    const [selected, setSelected] = React.useState([]);
-    const {t} = useTranslation()
+    const [selected, setSelected] = useState([]);
+    const { t } = useTranslation()
+    const { user } = useSelector(state => state.auth)
 
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
@@ -131,21 +133,27 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                         <TableCell align="left">{row.email}</TableCell>
                                         <TableCell align="left">{row.roles.join(", ")}
                                         </TableCell>
-                                        <TableCell align="left" sx={{ display: "flex", alignItems: "center" }}>
-                                            <IconButton onClick={(event) => {
-                                                deleteUser(row.id)
-                                                event.stopPropagation();
-                                            }}>
-                                                <DeleteOutlinedIcon />
-                                            </IconButton>
+                                        <TableCell align="left" sx={{ display: "flex", alignItems: "center", justifyContent: 'flex-start' }}>
+                                            {
+                                                user === 'admin' && (
+                                                    <>
+                                                        <IconButton onClick={(event) => {
+                                                            deleteUser(row.id)
+                                                            event.stopPropagation();
+                                                        }}>
+                                                            <DeleteOutlinedIcon />
+                                                        </IconButton>
+                                                        <IconButton onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            alert(t('feature_not_implemented'))
+                                                        }}>
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </>
+                                                )
+                                            }
                                             <IconButton onClick={(event) => handleClick(event, row.name)}>
                                                 <VisibilityOutlinedIcon />
-                                            </IconButton>
-                                            <IconButton onClick={(e) => {
-                                                e.stopPropagation()
-                                                alert(t('feature_not_implemented'))
-                                            }}>
-                                                <EditIcon/>
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>
