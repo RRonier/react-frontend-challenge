@@ -29,7 +29,9 @@ const resources = {
             "enter_users_data": "Please enter user's data",
             "cancel": "Cancel",
             "add_user": "Add User",
-            "feature_not_implemented": "Feature not implemented"
+            "feature_not_implemented": "Feature not implemented",
+            "loading": "Loading",
+            "header": "Users Management App"
         }
     },
     es: {
@@ -60,6 +62,8 @@ const resources = {
             "cancel": "Cancelar",
             "add_user": "Agregar Usuario",
             "feature_not_implemented": "Feature no implementada",
+            "loading": "Cargando",
+            "header": "App de Gestión de Usuarios"
         }
     }
 };
