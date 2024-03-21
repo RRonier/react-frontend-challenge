@@ -3,6 +3,7 @@ import {
     createBrowserRouter,
 } from "react-router-dom";
 import UsersDashboard from "../../pages/users.jsx";
+import { PrivateRoute } from "../PrivateRoute.jsx";
 
 export const Router = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ export const Router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <UsersDashboard />,
+        element: <PrivateRoute />,
+        children: [{
+            path: "/dashboard",
+            element: <UsersDashboard />
+        }]
     }
 ]);
