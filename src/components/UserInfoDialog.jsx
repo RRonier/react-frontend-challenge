@@ -31,10 +31,10 @@ export default function UserInfoDialog({ open, handleClose, user }) {
           <b>Name:</b> {user.name}
         </Typography>
         <Typography gutterBottom>
-        <b>Email:</b> {user.email}
+          <b>Email:</b> {user.email}
         </Typography>
         <Typography gutterBottom>
-        <b>Roles:</b> {user.roles}
+          <b>Roles:</b> {user.roles}
         </Typography>
       </DialogContent>
       <DialogActions>
