@@ -12,7 +12,7 @@ export const deleteUser = async (id, token) => await API.delete(`/users/${id}`, 
     }
 })
 
-export const addUser = async (name, email, roles, token) => await API.put('/users', {
+export const addUser = async (name, email, roles, token) => await API.post('/users', {
     name,
     email,
     roles
