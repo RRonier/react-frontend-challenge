@@ -33,8 +33,8 @@ export default function MultipleSelect({name, handleChange, value, onError, onBl
     const {t} = useTranslation()
 
     const roles = [
-        t("admin_role"),
-        t("user_role")
+        {label: t("admin_role"), value: "admin"},
+        {label: t("user_role"), value: "user"}
     ];
     return (
         <div>
@@ -55,11 +55,11 @@ export default function MultipleSelect({name, handleChange, value, onError, onBl
                 >
                     {roles.map((role) => (
                         <MenuItem
-                            key={role}
-                            value={role}
+                            key={role.label}
+                            value={role.value}
                             style={getStyles(role, value, theme)}
                         >
-                            {role}
+                            {role.label}
                         </MenuItem>
                     ))}
                 </Select>

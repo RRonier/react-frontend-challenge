@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from "react-i18next";
 import { useSelector } from 'react-redux'
 import UserInfoDialog from "../components/UserInfoDialog.jsx"
+import UserDialog from "../components/UserDialog.jsx"
 
 function EnhancedTableHead(props) {
     // eslint-disable-next-line react/prop-types
@@ -60,39 +61,30 @@ function EnhancedTableHead(props) {
 
 // eslint-disable-next-line react/prop-types
 export const EnhancedTable = ({ users, deleteUser }) => {
-    const [selected, setSelected] = useState([]);
     const { t } = useTranslation()
     const { user } = useSelector(state => state.auth)
 
     const [userInfoOpen, setUserInfoOpen] = useState(false);
+    const [editUserOpen, setEditUserOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
-    const handleUserInfoOpen = () => {
-        setUserInfoOpen(true);
-    };
     const handleUserInfoClose = () => {
         setUserInfoOpen(false);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-        setSelected(newSelected);
+    const handleEditUserClose = () => {
+        setEditUserOpen(false);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const handleUserInfoOpen = (user) => {
+        setSelectedUser(user);
+        setUserInfoOpen(true);
+    };
+
+    const handleEditUserOpen = (user) => {
+        setSelectedUser(user);
+        setEditUserOpen(true);
+    }
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -103,37 +95,20 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                         aria-labelledby="tableTitle"
                         size='medium'
                     >
-                        <EnhancedTableHead
-                            numSelected={selected.length}
-                        />
+                        <EnhancedTableHead />
                         <TableBody>
-                            {/* eslint-disable-next-line react/prop-types */}
                             {users && users.length ? users.map((row, index) => {
-                                const isItemSelected = isSelected(row.name);
-                                const labelId = `enhanced-table-checkbox-${index}`;
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.name)}
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
                                         tabIndex={-1}
                                         key={index}
-                                        selected={isItemSelected}
                                         sx={{ cursor: 'pointer' }}
                                     >
                                         <TableCell padding="checkbox" align="right">
-                                            <Checkbox
-                                                color="primary"
-                                                checked={isItemSelected}
-                                                inputProps={{
-                                                    'aria-labelledby': labelId,
-                                                }}
-                                            />
                                         </TableCell>
                                         <TableCell
                                             component="th"
-                                            id={labelId}
                                             scope="row"
                                             padding="none"
                                             align="left"
@@ -144,33 +119,37 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                         <TableCell align="left">{row.roles.join(", ")}
                                         </TableCell>
                                         <TableCell align="left" sx={{ display: "flex", alignItems: "center", justifyContent: 'flex-start' }}>
-                                            {
-                                                user === 'admin' && (
-                                                    <>
-                                                        <IconButton onClick={(event) => {
-                                                            deleteUser(row.id)
-                                                            event.stopPropagation();
-                                                        }}>
-                                                            <DeleteOutlinedIcon />
-                                                        </IconButton>
-                                                        <IconButton onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            console.log({ row })
-                                                        }}>
-                                                            <EditIcon />
-                                                        </IconButton>
-                                                    </>
-                                                )
-                                            }
-                                            <IconButton onClick={handleUserInfoOpen}>
+                                            {user === 'admin' && (
+                                                <>
+                                                    <IconButton onClick={(event) => {
+                                                        deleteUser(row.id)
+                                                        event.stopPropagation();
+                                                    }}>
+                                                        <DeleteOutlinedIcon />
+                                                    </IconButton>
+                                                    <IconButton onClick={(e) => {
+                                                        handleEditUserOpen(row)
+                                                        e.stopPropagation()
+                                                    }}>
+                                                        <EditIcon />
+                                                    </IconButton>
+                                                </>
+                                            )}
+                                            <IconButton onClick={(e) => {
+                                                e.stopPropagation()
+                                                handleUserInfoOpen(row)
+                                            }}>
                                                 <VisibilityOutlinedIcon />
                                             </IconButton>
+                                            {
+                                                editUserOpen &&
+                                                <UserDialog isEditMode userData={selectedUser} handleClose={handleEditUserClose} open={editUserOpen} />
+                                            }
+                                            {
+                                                userInfoOpen &&
+                                                <UserInfoDialog user={selectedUser} open={userInfoOpen} handleClose={handleUserInfoClose} />
+                                            }
                                         </TableCell>
-                                        {
-                                            userInfoOpen && <div style={{ zIndex: 999 }}>
-                                                <UserInfoDialog user={row} open={handleUserInfoOpen} handleClose={handleUserInfoClose} />
-                                            </div>
-                                        }
                                     </TableRow>
                                 );
                             }) : <></>}
