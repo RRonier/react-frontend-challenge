@@ -14,9 +14,10 @@ const UsersDashboard = () => {
     const [showUserDialog, setShowUserDialog] = useState(false)
     const dispatch = useDispatch()
     const users = useSelector((state) => state.users.entities);
+    const {token} = useSelector(state => state.auth)
 
     useEffect(() => {
-        dispatch(fetchUsers());
+        dispatch(fetchUsers(token));
     }, []);
 
     const filteredValue = search ?
@@ -25,7 +26,7 @@ const UsersDashboard = () => {
 
     const onDeleteUser = async (id) => {
         if (confirm(t('should_delete_user_message'))) {
-            dispatch(removeUser(id))
+            dispatch(removeUser({id, token}))
             enqueueSnackbar(t('user_deleted_message'))
         }
     }
