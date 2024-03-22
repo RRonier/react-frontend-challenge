@@ -1,17 +1,23 @@
-import {API} from "../API.js";
+import { API } from "../API.js";
 
-const config = {
+export const getUsers = async (token) => await API.get('/users', {
     headers: {
-        'x-access-token': `Bearer ${localStorage.getItem('token')}`
+        'x-access-token': `Bearer ${token}`
     }
-}
+})
 
-export const getUsers = async () => await API.get('/users', config)
+export const deleteUser = async (id, token) => await API.delete(`/users/${id}`, {
+    headers: {
+        'x-access-token': `Bearer ${token}`
+    }
+})
 
-export const deleteUser = async (id) => await API.delete(`/users/${id}`, config)
-
-export const addUser = async (name, email, roles) => await API.put('/users', {
+export const addUser = async (name, email, roles, token) => await API.put('/users', {
     name,
     email,
     roles
-}, config)
+}, {
+    headers: {
+        'x-access-token': `Bearer ${token}`
+    }
+})

@@ -3,27 +3,28 @@ import {addUser, deleteUser, getUsers} from "../../services/users.js";
 
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
-    async () => {
-        const {data} = await getUsers();
+    async (token) => {
+        const {data} = await getUsers(token);
         return data;
     }
 )
 
 export const removeUser = createAsyncThunk(
     'users/deleteUser',
-    async (id) => {
-        const {data} = await deleteUser(id)
+    async (id, token) => {
+        const {data} = await deleteUser(id, token)
         return data
     })
 
 export const createUser = createAsyncThunk(
     'users/createUser',
-    async (values) => {
+    async (values, token) => {
         const {name, email, roles} = values
         return await addUser(
             name,
             email,
-            roles
+            roles,
+            token
         )
     })
 
