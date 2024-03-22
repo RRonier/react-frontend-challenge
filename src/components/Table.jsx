@@ -15,7 +15,8 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from "react-i18next";
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import UserInfoDialog from "../components/UserInfoDialog.jsx"
 
 function EnhancedTableHead(props) {
     // eslint-disable-next-line react/prop-types
@@ -62,6 +63,15 @@ export const EnhancedTable = ({ users, deleteUser }) => {
     const [selected, setSelected] = useState([]);
     const { t } = useTranslation()
     const { user } = useSelector(state => state.auth)
+
+    const [userInfoOpen, setUserInfoOpen] = useState(false);
+
+    const handleUserInfoOpen = () => {
+        setUserInfoOpen(true);
+    };
+    const handleUserInfoClose = () => {
+        setUserInfoOpen(false);
+    };
 
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
@@ -145,17 +155,22 @@ export const EnhancedTable = ({ users, deleteUser }) => {
                                                         </IconButton>
                                                         <IconButton onClick={(e) => {
                                                             e.stopPropagation()
-                                                            alert(t('feature_not_implemented'))
+                                                            console.log({ row })
                                                         }}>
                                                             <EditIcon />
                                                         </IconButton>
                                                     </>
                                                 )
                                             }
-                                            <IconButton onClick={(event) => handleClick(event, row.name)}>
+                                            <IconButton onClick={handleUserInfoOpen}>
                                                 <VisibilityOutlinedIcon />
                                             </IconButton>
                                         </TableCell>
+                                        {
+                                            userInfoOpen && <div style={{ zIndex: 999 }}>
+                                                <UserInfoDialog user={row} open={handleUserInfoOpen} handleClose={handleUserInfoClose} />
+                                            </div>
+                                        }
                                     </TableRow>
                                 );
                             }) : <></>}

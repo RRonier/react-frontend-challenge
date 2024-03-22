@@ -34,14 +34,14 @@ const UsersDashboard = () => {
         setShowUserDialog(true)
     }
 
-    const handleClose = () => {
+    const userDialogClose = () => {
         setShowUserDialog(false);
     };
 
     return (
         <div style={{ width: '100vw', height: '100vh', backgroundColor: 'white' }}>
             <Navbar />
-            <Grid container>
+            <Grid container sx={{backgroundColor: 'white'}}>
                 <Box sx={{ margin: '10px auto', p: 2 }} className="appContainer">
                     <Typography fontWeight="bold" fontSize={20} sx={{ mb: 1, color: '#000' }}>{t('usersData')}</Typography>
                     <Typography variant="body1" fontSize={14} sx={{ mb: 2, color: '#000' }}>{t('tableSubtitle')}</Typography>
@@ -70,7 +70,7 @@ const UsersDashboard = () => {
                 {
                     showUserDialog &&
                     <div style={{ zIndex: 999 }}>
-                        <UserDialog open={true} handleClose={handleClose} />
+                        <UserDialog open={true} handleClose={userDialogClose} />
                     </div>
                 }
             </Grid>
