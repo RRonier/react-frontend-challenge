@@ -21,7 +21,7 @@ const UsersDashboard = () => {
     }, []);
 
     const filteredValue = search ?
-        users.filter(user => user.name.includes(search.toLowerCase()) || user.roles.includes(search.toLowerCase()))
+        users.filter(user => user.name.includes(search.toLowerCase()) || user.roles.some(role => role.toLowerCase().includes(search.toLowerCase())))
         : users
 
     const onDeleteUser = async (id) => {
